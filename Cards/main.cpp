@@ -28,8 +28,8 @@ const int CARD_W = 140;
 const int CARD_H = 190;
 const int BETWEEN_CARDS = 40;
 const int HORIZ_STEP = 40;
-const string cardsDir = "..\\..\\sdl2-hearts-game-master\\res\\Cards\\";
-const string pile = cardsDir + "cardBack_blue4.png";
+string cardsDir = "";
+string pile = "";
 
 bool init();
 bool loadMedia(string path, SDL_Surface** gPNGSurface, bool noAdd);
@@ -318,9 +318,9 @@ void drawNewGame()
 	textRect.y = h / 2 - 30;
 
 	SDL_Surface* gPNGSurface = NULL;
-	if (loadMedia("NewGame.png", &gPNGSurface, true))
+	if (loadMedia(cardsDir + "/NewGame.png", &gPNGSurface, true))
 		SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, &newGame);
-	if (loadMedia(Mix_PausedMusic() ? "icons8-audio-50.png" : "icons8-no-audio-50.png", &gPNGSurface, true))
+	if (loadMedia(Mix_PausedMusic() ? cardsDir + "/icons8-audio-50.png" : cardsDir + "/icons8-no-audio-50.png", &gPNGSurface, true))
 		SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, &audioRect);
 	if (amount && gFont)
 	{
@@ -331,8 +331,16 @@ void drawNewGame()
 
 }
 
+string getCardsDir(char* arg)
+{
+	return filesystem::path(arg).parent_path().string() + "/Res";
+}
+
 int main(int argc, char* args[])
 {
+	cardsDir = getCardsDir(args[0]);
+	pile = pile = cardsDir + "/cardBack_blue4.png";
+
 	if (init())
 	{
 		SDL_Surface* gPNGSurface = NULL;
@@ -342,10 +350,10 @@ int main(int argc, char* args[])
 			bool quit = false;
 			SDL_Event e; 
 
-			gFont = TTF_OpenFont("Arial-BoldMT.ttf", 48);
+			gFont = TTF_OpenFont((cardsDir + "/Arial-BoldMT.ttf").data(), 64);
 			
 			Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
-			gMusic = Mix_LoadMUS("Hugh_Laurie_-_The_Weed_Smokers_Dream_(musmore.com).mp3");
+			gMusic = Mix_LoadMUS((cardsDir + "/Hugh_Laurie_-_The_Weed_Smokers_Dream_(musmore.com).mp3").data());
 			if (gMusic)
 				Mix_PlayMusic(gMusic, 1);
 
