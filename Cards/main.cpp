@@ -1,6 +1,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "SDL_mixer.h"
+#include <SDL_ttf.h>
 #include <stdio.h>
 #include <string>
 #include <vector>
@@ -37,13 +38,14 @@ void close();
 void updateState();
 void drawNewGame();
 void createDeck();
+int getValueFromName(string name);
 
 SDL_Surface* loadSurface(string path);
 SDL_Window* gWindow = NULL;
 SDL_Surface* gScreenSurface = NULL;
 int initPos = 0;
 
-Mix_Music* gMusic;
+Mix_Music* gMusic = NULL;
 
 vector<SDL_Surface> activeSurfs;
 vector<int> activePos;
@@ -52,11 +54,17 @@ vector<string> deck;
 
 SDL_Rect newGame;
 SDL_Rect audioRect;
+SDL_Rect textRect;
+
+TTF_Font* gFont = NULL;
+int amount = 0;
 
 bool init()
 {
 	bool success = true;
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
+		success = false;
+	else if (TTF_Init() < 0)
 		success = false;
 	else
 	{
@@ -92,14 +100,45 @@ bool loadMedia(string path, SDL_Surface** gPNGSurface, bool noAdd = false)
 	return success;
 }
 
+int getValueFromName(string name)
+{
+	if (name.find("2.png") != string::npos)
+		return 2;
+	if (name.find("3.png") != string::npos)
+		return 3;
+	if (name.find("4.png") != string::npos)
+		return 4;
+	if (name.find("5.png") != string::npos)
+		return 5;
+	if (name.find("6.png") != string::npos)
+		return 6;
+	if (name.find("7.png") != string::npos)
+		return 7;
+	if (name.find("8.png") != string::npos)
+		return 8;
+	if (name.find("9.png") != string::npos)
+		return 9;
+	if (name.find("10.png") != string::npos || name.find("J.png") != string::npos || name.find("K.png") != string::npos || name.find("Q.png") != string::npos)
+		return 10;
+	if (name.find("A.png") != string::npos)
+		return 11;
+	return 0;
+}
+
 void close()
 {
 	for (auto& s : activeSurfs)
 		SDL_FreeSurface(&s);
 
-	Mix_FreeMusic(gMusic);
+	if (gFont)
+		TTF_CloseFont(gFont);
+
+	if (gMusic)
+		Mix_FreeMusic(gMusic);
+
 	SDL_DestroyWindow(gWindow);
 
+	TTF_Quit();
 	Mix_Quit();
 	IMG_Quit();
 	SDL_Quit();
@@ -191,7 +230,7 @@ void handleEvent(SDL_Event* e)
 		if (e->type == SDL_MOUSEBUTTONDOWN && insideNewGame)
 			createDeck();
 
-		if (e->type == SDL_MOUSEBUTTONDOWN && insideAudio)
+		if (e->type == SDL_MOUSEBUTTONDOWN && insideAudio && gMusic)
 		{
 			if (Mix_PausedMusic())
 				Mix_ResumeMusic();
@@ -219,6 +258,8 @@ void drawCard(string path)
 		SDL_BlitSurface(&activeSurfs[activeSurfs.size() - 1], NULL, gScreenSurface, &activeRects[activeRects.size() - 1]);
 		SDL_UpdateWindowSurface(gWindow);
 	}
+
+	amount += getValueFromName(path);
 
 	updateState();
 }
@@ -248,6 +289,7 @@ void createDeck()
 	random_device rd;
 	mt19937 generator(rd());
 	
+	amount = 0;
 	deck.clear();
 	for (auto const& entry : filesystem::directory_iterator(cardsDir))
 	{
@@ -272,11 +314,21 @@ void drawNewGame()
 	audioRect.x = w - AUDIO_WIDTH - 20;
 	audioRect.y = h - AUDIO_HEIGHT - 10;
 
+	textRect.x = w / 2 - 60;
+	textRect.y = h / 2 - 30;
+
 	SDL_Surface* gPNGSurface = NULL;
 	if (loadMedia("NewGame.png", &gPNGSurface, true))
 		SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, &newGame);
 	if (loadMedia(Mix_PausedMusic() ? "icons8-audio-50.png" : "icons8-no-audio-50.png", &gPNGSurface, true))
 		SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, &audioRect);
+	if (amount && gFont)
+	{
+		SDL_Surface* textSurface = TTF_RenderText_Solid(gFont, to_string(amount).c_str(), { 255, 255, 255 });
+		if (textSurface)
+			SDL_BlitSurface(textSurface, NULL, gScreenSurface, &textRect);
+	}
+
 }
 
 int main(int argc, char* args[])
@@ -289,10 +341,13 @@ int main(int argc, char* args[])
 			bool animate = true;
 			bool quit = false;
 			SDL_Event e; 
+
+			gFont = TTF_OpenFont("Arial-BoldMT.ttf", 48);
 			
 			Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
 			gMusic = Mix_LoadMUS("Hugh_Laurie_-_The_Weed_Smokers_Dream_(musmore.com).mp3");
-			Mix_PlayMusic(gMusic, 1);
+			if (gMusic)
+				Mix_PlayMusic(gMusic, 1);
 
 			SDL_Rect rect{};
 			activeRects.push_back(rect);
