@@ -1,5 +1,6 @@
 #include <SDL.h>
 #include <SDL_image.h>
+#include "SDL_mixer.h"
 #include <stdio.h>
 #include <string>
 #include <vector>
@@ -15,6 +16,8 @@ const int B_COLOR = 0;
 
 const int NEW_GAME_WIDTH = 137;
 const int NEW_GAME_HEIGHT = 30;
+const int AUDIO_WIDTH = 30;
+const int AUDIO_HEIGHT = 30;
 
 const int SCREEN_WIDTH = 1080;
 const int SCREEN_HEIGHT = 720;
@@ -40,20 +43,25 @@ SDL_Window* gWindow = NULL;
 SDL_Surface* gScreenSurface = NULL;
 int initPos = 0;
 
+Mix_Music* gMusic;
+
 vector<SDL_Surface> activeSurfs;
 vector<int> activePos;
 vector<SDL_Rect> activeRects;
 vector<string> deck;
 
 SDL_Rect newGame;
+SDL_Rect audioRect;
 
 bool init()
 {
 	bool success = true;
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
 		success = false;
 	else
 	{
+		Mix_Init(MIX_INIT_MP3);
+
 		gWindow = SDL_CreateWindow("Black Jack", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (gWindow == NULL)
 			success = false;
@@ -89,9 +97,10 @@ void close()
 	for (auto& s : activeSurfs)
 		SDL_FreeSurface(&s);
 
+	Mix_FreeMusic(gMusic);
 	SDL_DestroyWindow(gWindow);
-	gWindow = NULL;
 
+	Mix_Quit();
 	IMG_Quit();
 	SDL_Quit();
 }
@@ -141,7 +150,6 @@ void handleEvent(SDL_Event* e)
 		}
 
 		bool insideNewGame = true;
-
 		if (x < newGame.x)
 		{
 			insideNewGame = false;
@@ -154,12 +162,42 @@ void handleEvent(SDL_Event* e)
 		{
 			insideNewGame = false;
 		}
+		else if (y > newGame.y + NEW_GAME_HEIGHT)
+		{
+			inside = false;
+		}
+
+		bool insideAudio = true;
+		if (x < audioRect.x)
+		{
+			insideAudio = false;
+		}
+		else if (x > audioRect.x + AUDIO_WIDTH)
+		{
+			insideAudio = false;
+		}
+		else if (y < audioRect.y)
+		{
+			insideAudio = false;
+		}
+		else if (y > audioRect.y + AUDIO_HEIGHT)
+		{
+			insideAudio = false;
+		}
 
 		if (e->type == SDL_MOUSEMOTION)
-			SDL_SetCursor(SDL_CreateSystemCursor(inside || insideNewGame ? SDL_SYSTEM_CURSOR_HAND : SDL_SYSTEM_CURSOR_ARROW));
+			SDL_SetCursor(SDL_CreateSystemCursor(inside || insideNewGame || insideAudio ? SDL_SYSTEM_CURSOR_HAND : SDL_SYSTEM_CURSOR_ARROW));
 
 		if (e->type == SDL_MOUSEBUTTONDOWN && insideNewGame)
 			createDeck();
+
+		if (e->type == SDL_MOUSEBUTTONDOWN && insideAudio)
+		{
+			if (Mix_PausedMusic())
+				Mix_ResumeMusic();
+			else
+				Mix_PauseMusic();
+		}
 	}
 }
 
@@ -225,13 +263,20 @@ void createDeck()
 
 void drawNewGame()
 {
-	SDL_GetWindowSize(gWindow, &newGame.x, &newGame.y);
-	newGame.x = (newGame.x - NEW_GAME_WIDTH) / 2;
-	newGame.y = newGame.y - NEW_GAME_HEIGHT;
+	int w, h;
+	SDL_GetWindowSize(gWindow, &w, &h);
+	
+	newGame.x = (w - NEW_GAME_WIDTH) / 2;
+	newGame.y = h - NEW_GAME_HEIGHT - 10;
+
+	audioRect.x = w - AUDIO_WIDTH - 20;
+	audioRect.y = h - AUDIO_HEIGHT - 10;
 
 	SDL_Surface* gPNGSurface = NULL;
 	if (loadMedia("NewGame.png", &gPNGSurface, true))
 		SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, &newGame);
+	if (loadMedia(Mix_PausedMusic() ? "icons8-audio-50.png" : "icons8-no-audio-50.png", &gPNGSurface, true))
+		SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, &audioRect);
 }
 
 int main(int argc, char* args[])
@@ -243,8 +288,12 @@ int main(int argc, char* args[])
 		{
 			bool animate = true;
 			bool quit = false;
-			SDL_Event e;
+			SDL_Event e; 
 			
+			Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
+			gMusic = Mix_LoadMUS("Hugh_Laurie_-_The_Weed_Smokers_Dream_(musmore.com).mp3");
+			Mix_PlayMusic(gMusic, 1);
+
 			SDL_Rect rect{};
 			activeRects.push_back(rect);
 			activeRects[0].x = initPos;

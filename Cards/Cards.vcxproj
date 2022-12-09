@@ -71,11 +71,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Users\kacha\.nuget\SDL2_image-2.6.2\include;C:\Users\kacha\.nuget\SDL2-2.26.1\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\kacha\.nuget\SDL2_image-2.6.2\include;C:\Users\kacha\.nuget\SDL2-2.26.1\include;C:\Users\kacha\.nuget\SDL2_mixer-2.6.2\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\kacha\.nuget\SDL2-2.26.1\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Users\kacha\.nuget\SDL2_image-2.6.2\include;C:\Users\kacha\.nuget\SDL2-2.26.1\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Users\kacha\.nuget\SDL2_image-2.6.2\include;C:\Users\kacha\.nuget\SDL2-2.26.1\include;C:\Users\kacha\.nuget\SDL2_mixer-2.6.2\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\kacha\.nuget\SDL2-2.26.1\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -117,7 +117,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>C:\Users\kacha\.nuget\SDL2-2.26.1\lib\x64\SDL2.lib;C:\Users\kacha\.nuget\SDL2-2.26.1\lib\x64\SDL2main.lib;C:\Users\kacha\.nuget\SDL2_image-2.6.2\lib\x64\SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\kacha\.nuget\SDL2-2.26.1\lib\x64\SDL2.lib;C:\Users\kacha\.nuget\SDL2-2.26.1\lib\x64\SDL2main.lib;C:\Users\kacha\.nuget\SDL2_image-2.6.2\lib\x64\SDL2_image.lib;C:\Users\kacha\.nuget\SDL2_mixer-2.6.2\lib\x64\SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -135,7 +135,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>C:\Users\kacha\.nuget\SDL2-2.26.1\lib\x64\SDL2.lib;C:\Users\kacha\.nuget\SDL2-2.26.1\lib\x64\SDL2main.lib;C:\Users\kacha\.nuget\SDL2_image-2.6.2\lib\x64\SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\kacha\.nuget\SDL2-2.26.1\lib\x64\SDL2.lib;C:\Users\kacha\.nuget\SDL2-2.26.1\lib\x64\SDL2main.lib;C:\Users\kacha\.nuget\SDL2_image-2.6.2\lib\x64\SDL2_image.lib;C:\Users\kacha\.nuget\SDL2_mixer-2.6.2\lib\x64\SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -210,7 +210,12 @@
     <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpadesJ.png" />
     <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpadesK.png" />
     <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpadesQ.png" />
+    <Image Include="icons8-audio-50.png" />
+    <Image Include="icons8-no-audio-50.png" />
     <Image Include="NewGame.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Hugh_Laurie_-_The_Weed_Smokers_Dream_(musmore.com).mp3" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
