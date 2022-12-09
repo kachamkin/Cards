@@ -224,5 +224,8 @@
     <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpadesQ.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="NewGame.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
 </Project>

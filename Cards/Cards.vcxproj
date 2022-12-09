@@ -210,6 +210,7 @@
     <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpadesJ.png" />
     <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpadesK.png" />
     <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpadesQ.png" />
+    <Image Include="NewGame.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

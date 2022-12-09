@@ -13,6 +13,9 @@ const int R_COLOR = 0;
 const int G_COLOR = 100;
 const int B_COLOR = 0;
 
+const int NEW_GAME_WIDTH = 137;
+const int NEW_GAME_HEIGHT = 30;
+
 const int SCREEN_WIDTH = 1080;
 const int SCREEN_HEIGHT = 720;
 const int TOP_BORDER = 40;
@@ -22,13 +25,15 @@ const int CARD_H = 190;
 const int BETWEEN_CARDS = 40;
 const int HORIZ_STEP = 40;
 const string cardsDir = "..\\..\\sdl2-hearts-game-master\\res\\Cards\\";
-const string pile = "..\\..\\sdl2-hearts-game-master\\res\\Cards\\cardBack_blue4.png";
+const string pile = cardsDir + "cardBack_blue4.png";
 
 bool init();
-bool loadMedia(string path, SDL_Surface** gPNGSurface);
+bool loadMedia(string path, SDL_Surface** gPNGSurface, bool noAdd);
 void drawCard(string path);
 void close();
 void updateState();
+void drawNewGame();
+void createDeck();
 
 SDL_Surface* loadSurface(string path);
 SDL_Window* gWindow = NULL;
@@ -39,6 +44,8 @@ vector<SDL_Surface> activeSurfs;
 vector<int> activePos;
 vector<SDL_Rect> activeRects;
 vector<string> deck;
+
+SDL_Rect newGame;
 
 bool init()
 {
@@ -63,7 +70,7 @@ bool init()
 	return success;
 }
 
-bool loadMedia(string path, SDL_Surface** gPNGSurface)
+bool loadMedia(string path, SDL_Surface** gPNGSurface, bool noAdd = false)
 {
 	bool success = true;
 
@@ -71,7 +78,7 @@ bool loadMedia(string path, SDL_Surface** gPNGSurface)
 	if (*gPNGSurface == NULL)
 		success = false;
 
-	if (success)
+	if (success && !noAdd)
 		activeSurfs.push_back(**gPNGSurface);
 
 	return success;
@@ -104,7 +111,7 @@ SDL_Surface* loadSurface(std::string path)
 
 void handleEvent(SDL_Event* e)
 {
-	if (e->type == SDL_MOUSEBUTTONDOWN)
+	if (e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEMOTION)
 	{
 		int x, y;
 		SDL_GetMouseState(&x, &y);
@@ -127,11 +134,32 @@ void handleEvent(SDL_Event* e)
 			inside = false;
 		}
 
-		if (inside && deck.size())
+		if (e->type == SDL_MOUSEBUTTONDOWN && inside && deck.size())
 		{
 			drawCard(deck[deck.size() - 1]);
 			deck.erase(deck.end() - 1);
 		}
+
+		bool insideNewGame = true;
+
+		if (x < newGame.x)
+		{
+			insideNewGame = false;
+		}
+		else if (x > newGame.x + NEW_GAME_WIDTH)
+		{
+			insideNewGame = false;
+		}
+		else if (y < newGame.y)
+		{
+			insideNewGame = false;
+		}
+
+		if (e->type == SDL_MOUSEMOTION)
+			SDL_SetCursor(SDL_CreateSystemCursor(inside || insideNewGame ? SDL_SYSTEM_CURSOR_HAND : SDL_SYSTEM_CURSOR_ARROW));
+
+		if (e->type == SDL_MOUSEBUTTONDOWN && insideNewGame)
+			createDeck();
 	}
 }
 
@@ -162,11 +190,23 @@ void updateState()
 	SDL_FillRect(gScreenSurface, NULL, SDL_MapRGB(gScreenSurface->format, R_COLOR, G_COLOR, B_COLOR));
 	for (int i = 0; i < activeSurfs.size(); i++)
 		SDL_BlitSurface(&activeSurfs[i], NULL, gScreenSurface, &activeRects[i]);
+	drawNewGame();
 	SDL_UpdateWindowSurface(gWindow);
 }
 
 void createDeck()
 {
+	size_t size = activeSurfs.size();
+	if (size > 1)
+	{
+		for (int i = 1; i < size; i++)
+		{
+			activeSurfs.erase(activeSurfs.end() - 1);
+			activePos.erase(activePos.end() - 1);
+			activeRects.erase(activeRects.end() - 1);
+		}
+	}
+
 	random_device rd;
 	mt19937 generator(rd());
 	
@@ -179,6 +219,19 @@ void createDeck()
 	}
 
 	shuffle(deck.begin(), deck.end(), generator);
+
+	updateState();
+}
+
+void drawNewGame()
+{
+	SDL_GetWindowSize(gWindow, &newGame.x, &newGame.y);
+	newGame.x = (newGame.x - NEW_GAME_WIDTH) / 2;
+	newGame.y = newGame.y - NEW_GAME_HEIGHT;
+
+	SDL_Surface* gPNGSurface = NULL;
+	if (loadMedia("NewGame.png", &gPNGSurface, true))
+		SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, &newGame);
 }
 
 int main(int argc, char* args[])
@@ -188,8 +241,6 @@ int main(int argc, char* args[])
 		SDL_Surface* gPNGSurface = NULL;
 		if (loadMedia(pile, &gPNGSurface))
 		{
-			createDeck();
-			
 			bool animate = true;
 			bool quit = false;
 			SDL_Event e;
@@ -199,7 +250,10 @@ int main(int argc, char* args[])
 			activeRects[0].x = initPos;
 			activeRects[0].y = TOP_BORDER;
 
+			createDeck();
+
 			SDL_FillRect(gScreenSurface, NULL, SDL_MapRGB(gScreenSurface->format, R_COLOR, G_COLOR, B_COLOR));
+			drawNewGame();
 
 			while (!quit)
 			{
