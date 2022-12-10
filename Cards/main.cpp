@@ -81,7 +81,6 @@ void replaceCardColor(SDL_Surface* s, SDL_Color from, SDL_Color to)
 		}
 	}	
 	SDL_UnlockSurface(s);
-
 }
 
 void getRandomBack()
@@ -128,7 +127,7 @@ SDL_Color getRandomColor()
 	shuffle(vals.begin(), vals.end(), generator);
 	b = vals[0];
 
-	return SDL_Color( r, g, b );
+	return SDL_Color(r, g, b);
 }
 
 void replaceCardsColor()
@@ -313,7 +312,6 @@ void handleEvent(SDL_Event* e)
 
 		if (e->type == SDL_MOUSEBUTTONDOWN && insideColor)
 			replaceCardsColor();
-
 	}
 }
 
@@ -340,6 +338,17 @@ void drawCard(string path)
 	amount += getValueFromName(path);
 
 	updateState();
+
+	if (amount == 21)
+	{
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "VICTORY!", "Win!", gWindow);
+		createDeck();
+	}
+	if (amount > 21)
+	{
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Defeat...", "You lose...", gWindow);
+		createDeck();
+	}
 }
 
 void updateState()
