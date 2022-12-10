@@ -113,7 +113,7 @@ SDL_Color getRandomColor()
 	int r, g, b;
 
 	vector<int> vals;
-	for (int i = 0; i < 256; i++)
+	for (int i = 180; i < 256; i++)
 		vals.push_back(i);
 
 	random_device rd;
