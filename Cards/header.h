@@ -13,25 +13,25 @@
 
 using namespace std;
 
-const int R_COLOR = 0;
-const int G_COLOR = 100;
-const int B_COLOR = 0;
+#define R_COLOR 0 
+#define G_COLOR 100 
+#define B_COLOR 0 
 
-const int EVENT_TIMEOUT = 64;
+#define EVENT_TIMEOUT 64 
 
-const int NEW_GAME_WIDTH = 137;
-const int NEW_GAME_HEIGHT = 30;
-const int AUDIO_WIDTH = 30;
-const int AUDIO_HEIGHT = 30;
+#define NEW_GAME_WIDTH 137 
+#define NEW_GAME_HEIGHT 30 
+#define AUDIO_WIDTH 30 
+#define AUDIO_HEIGHT 30 
 
-const int SCREEN_WIDTH = 1080;
-const int SCREEN_HEIGHT = 720;
-const int TOP_BORDER = 40;
-const int ANIMATION_LENGTH = 100;
-const int CARD_W = 140;
-const int CARD_H = 190;
-const int BETWEEN_CARDS = 40;
-const int HORIZ_STEP = 40;
+#define SCREEN_WIDTH 1080 
+#define SCREEN_HEIGHT 720 
+#define TOP_BORDER 40 
+#define ANIMATION_LENGTH 100 
+#define CARD_W 140 
+#define CARD_H 190 
+#define BETWEEN_CARDS 40 
+#define HORIZ_STEP 40
 
 string cardsDir = "";
 string pile = "";
