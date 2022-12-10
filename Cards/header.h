@@ -60,7 +60,10 @@ vector<string> deck;
 SDL_Rect newGame;
 SDL_Rect audioRect;
 SDL_Rect textRect;
+SDL_Rect colorRect;
 
 TTF_Font* gFont = NULL;
 int amount = 0;
+
+SDL_Color cardsColor(255, 255, 255);
 

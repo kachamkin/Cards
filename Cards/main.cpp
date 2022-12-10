@@ -27,6 +27,120 @@ bool init()
 	return success;
 }
 
+Uint32 getPixel(SDL_Surface* surface, int x, int y)
+{
+	int bpp = surface->format->BytesPerPixel;
+	Uint8* p = (Uint8*)surface->pixels + y * surface->pitch + x * bpp;
+
+	switch (bpp)
+	{
+	case 1:
+		return *p;
+		break;
+
+	case 2:
+		return *(Uint16*)p;
+		break;
+
+	case 3:
+		if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+			return p[0] << 16 | p[1] << 8 | p[2];
+		else
+			return p[0] | p[1] << 8 | p[2] << 16;
+		break;
+
+	case 4:
+		return *(Uint32*)p;
+		break;
+
+	default:
+		return 0;      
+	}
+}
+
+void setPixel(SDL_Surface* s, int x, int y, Uint32 pixel)
+{
+	Uint32* const target_pixel = (Uint32*)((Uint8*)s->pixels
+		+ y * s->pitch
+		+ x * s->format->BytesPerPixel);
+	*target_pixel = pixel;
+}
+
+void replaceCardColor(SDL_Surface* s, SDL_Color from, SDL_Color to)
+{
+	SDL_LockSurface(s);
+	for (int y = 0; y < s->h; y++)
+	{
+		for (int x = 0; x < s->w; x++)
+		{
+			SDL_Color rgb;
+			Uint32 pixelData = getPixel(s, x, y);
+			SDL_GetRGB(pixelData, s->format, &rgb.r, &rgb.g, &rgb.b);
+			if (rgb.r == from.r && rgb.g == from.g && rgb.b == from.b)
+				setPixel(s, x, y, SDL_MapRGB(s->format, to.r, to.g, to.b));
+		}
+	}	
+	SDL_UnlockSurface(s);
+
+}
+
+void getRandomBack()
+{
+	vector<string> backs;
+	for (auto const& entry : filesystem::directory_iterator(cardsDir))
+	{
+		string file = entry.path().string();
+		if (file.find("cardBack") != string::npos)
+			backs.push_back(file);
+	}
+
+	random_device rd;
+	mt19937 generator(rd());
+
+	shuffle(backs.begin(), backs.end(), generator);
+
+	SDL_Surface* gPNGSurface = NULL;
+	if (loadMedia(backs[0], &gPNGSurface, true))
+	{
+		SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, &activeRects[0]);
+		activeSurfs[0] = *gPNGSurface;
+		SDL_UpdateWindowSurface(gWindow);
+	}
+}
+
+SDL_Color getRandomColor()
+{
+	int r, g, b;
+
+	vector<int> vals;
+	for (int i = 0; i < 256; i++)
+		vals.push_back(i);
+
+	random_device rd;
+	mt19937 generator(rd());
+
+	shuffle(vals.begin(), vals.end(), generator);
+	r = vals[0];
+
+	shuffle(vals.begin(), vals.end(), generator);
+	g = vals[0];
+
+	shuffle(vals.begin(), vals.end(), generator);
+	b = vals[0];
+
+	return SDL_Color( r, g, b );
+}
+
+void replaceCardsColor()
+{
+	getRandomBack();
+	SDL_Color to = getRandomColor();
+	for (int i = 1; i < activeSurfs.size(); i++)
+		replaceCardColor(&activeSurfs[i], SDL_Color(cardsColor.r, cardsColor.g, cardsColor.b), to);
+	cardsColor = to;
+	SDL_UpdateWindowSurface(gWindow);
+}
+
 bool loadMedia(string path, SDL_Surface** gPNGSurface, bool noAdd = false)
 {
 	bool success = true;
@@ -165,8 +279,26 @@ void handleEvent(SDL_Event* e)
 			insideAudio = false;
 		}
 
+		bool insideColor = true;
+		if (x < colorRect.x)
+		{
+			insideColor = false;
+		}
+		else if (x > colorRect.x + AUDIO_WIDTH)
+		{
+			insideColor = false;
+		}
+		else if (y < colorRect.y)
+		{
+			insideColor = false;
+		}
+		else if (y > colorRect.y + AUDIO_HEIGHT)
+		{
+			insideColor = false;
+		}
+
 		if (e->type == SDL_MOUSEMOTION)
-			SDL_SetCursor(SDL_CreateSystemCursor(inside || insideNewGame || insideAudio ? SDL_SYSTEM_CURSOR_HAND : SDL_SYSTEM_CURSOR_ARROW));
+			SDL_SetCursor(SDL_CreateSystemCursor(inside || insideNewGame || insideAudio || insideColor ? SDL_SYSTEM_CURSOR_HAND : SDL_SYSTEM_CURSOR_ARROW));
 
 		if (e->type == SDL_MOUSEBUTTONDOWN && insideNewGame)
 			createDeck();
@@ -178,6 +310,10 @@ void handleEvent(SDL_Event* e)
 			else
 				Mix_PauseMusic();
 		}
+
+		if (e->type == SDL_MOUSEBUTTONDOWN && insideColor)
+			replaceCardsColor();
+
 	}
 }
 
@@ -197,6 +333,7 @@ void drawCard(string path)
 		activeRects[activeRects.size() - 1].x = activePos[activePos.size() - 1];
 
 		SDL_BlitSurface(&activeSurfs[activeSurfs.size() - 1], NULL, gScreenSurface, &activeRects[activeRects.size() - 1]);
+		replaceCardColor(&activeSurfs[activeSurfs.size() - 1], SDL_Color(255, 255, 255), cardsColor);
 		SDL_UpdateWindowSurface(gWindow);
 	}
 
@@ -258,9 +395,14 @@ void drawNewGame()
 	textRect.x = w / 2 - 60;
 	textRect.y = h / 2 - 30;
 
+	colorRect.x = 10;
+	colorRect.y = h - AUDIO_HEIGHT - 10;
+
 	SDL_Surface* gPNGSurface = NULL;
 	if (loadMedia(cardsDir + "/NewGame.png", &gPNGSurface, true))
 		SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, &newGame);
+	if (loadMedia(cardsDir + "/SeekPng.com_colorful-png_512093.png", &gPNGSurface, true))
+		SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, &colorRect);
 	if (loadMedia(Mix_PausedMusic() ? cardsDir + "/icons8-audio-50.png" : cardsDir + "/icons8-no-audio-50.png", &gPNGSurface, true))
 		SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, &audioRect);
 	if (amount && gFont)
