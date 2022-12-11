@@ -317,17 +317,25 @@ void handleEvent(SDL_Event* e)
 
 void playSoundEffect(bool victory = false)
 {
-	gMusic = Mix_LoadMUS((cardsDir + (victory ? "/success-fanfare-trumpets-6185.mp3" : "/failure-1-89170.mp3")).data());
-	if (gMusic)
-		Mix_PlayMusic(gMusic, 0);
+	bool paused = Mix_PausedMusic();
+
+	if (!paused)
+	{
+		gMusic = Mix_LoadMUS((cardsDir + (victory ? "/success-fanfare-trumpets-6185.mp3" : "/failure-1-89170.mp3")).data());
+		if (gMusic)
+			Mix_PlayMusic(gMusic, 0);
+	}
 
 	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, victory ? "VICTORY!" : "Defeat...", victory ? "Win!" : "You lose...", gWindow);
 	createDeck();
-	SDL_Delay(1000);
 
-	gMusic = Mix_LoadMUS((cardsDir + "/Hugh_Laurie_-_The_Weed_Smokers_Dream_(musmore.com).mp3").data());
-	if (gMusic)
-		Mix_PlayMusic(gMusic, 1);
+	if (!paused)
+	{
+		SDL_Delay(1000);
+		gMusic = Mix_LoadMUS((cardsDir + "/Hugh_Laurie_-_The_Weed_Smokers_Dream_(musmore.com).mp3").data());
+		if (gMusic)
+			Mix_PlayMusic(gMusic, 1);
+	}
 }
 
 void drawCard(string path)
