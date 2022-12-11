@@ -242,6 +242,9 @@
     <Image Include="..\x64\Debug\Res\white-arrow-png-41942.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="..\x64\Debug\Res\SeekPng.com_colorful-png_512093_transp.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGame.h">

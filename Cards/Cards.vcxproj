@@ -220,6 +220,7 @@
     <Image Include="..\x64\Debug\Res\icons8-no-audio-50.png" />
     <Image Include="..\x64\Debug\Res\NewGame.png" />
     <Image Include="..\x64\Debug\Res\SeekPng.com_colorful-png_512093.png" />
+    <Image Include="..\x64\Debug\Res\SeekPng.com_colorful-png_512093_transp.png" />
     <Image Include="..\x64\Debug\Res\white-arrow-png-41942.png" />
   </ItemGroup>
   <ItemGroup>

@@ -42,6 +42,7 @@ using namespace std;
 #define NO_AUDIO_BUTTON "/icons8-no-audio-50.png"
 #define VICTORY_SOUND "/success-fanfare-trumpets-6185.mp3"
 #define DEFEAT_SOUND "/failure-1-89170.mp3"
+#define WINDOW_ICON "/SeekPng.com_colorful-png_512093_transp.png"
 
 string cardsDir = "";
 string pile = "";

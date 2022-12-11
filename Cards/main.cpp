@@ -398,13 +398,17 @@ string getCardsDir(char* arg)
 int main(int argc, char* args[])
 {
 	cardsDir = getCardsDir(args[0]);
-	pile = pile = cardsDir + INIT_CARD_BACK;
+	pile = cardsDir + INIT_CARD_BACK;
 
 	if (init())
 	{
 		SDL_Surface* gPNGSurface = NULL;
 		if (loadMedia(pile, &gPNGSurface))
 		{
+			SDL_Surface* icon = NULL;
+			if (loadMedia(cardsDir + WINDOW_ICON, &icon, true))
+				SDL_SetWindowIcon(gWindow, icon);
+			
 			bool animate = true;
 			bool quit = false;
 			SDL_Event e; 
