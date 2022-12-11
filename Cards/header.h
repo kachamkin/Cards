@@ -33,6 +33,16 @@ using namespace std;
 #define BETWEEN_CARDS 40 
 #define HORIZ_STEP 40
 
+#define BACK_MUSIC "/Hugh_Laurie_-_The_Weed_Smokers_Dream_(musmore.com).mp3"
+#define USED_FONT "/Arial-BoldMT.ttf"
+#define INIT_CARD_BACK "/cardBack_blue4.png"
+#define NEW_GAME_BUTTON "/NewGame.png"
+#define COLORS_CHANGE_BUTTON "/SeekPng.com_colorful-png_512093.png"
+#define AUDIO_BUTTON "/icons8-audio-50.png"
+#define NO_AUDIO_BUTTON "/icons8-no-audio-50.png"
+#define VICTORY_SOUND "/success-fanfare-trumpets-6185.mp3"
+#define DEFEAT_SOUND "/failure-1-89170.mp3"
+
 string cardsDir = "";
 string pile = "";
 

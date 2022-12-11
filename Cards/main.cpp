@@ -217,83 +217,17 @@ void handleEvent(SDL_Event* e)
 	{
 		int x, y;
 		SDL_GetMouseState(&x, &y);
-		bool inside = true;
-
-		if (x < initPos)
-		{
-			inside = false;
-		}
-		else if (x > initPos + CARD_W)
-		{
-			inside = false;
-		}
-		else if (y < TOP_BORDER)
-		{
-			inside = false;
-		}
-		else if (y > TOP_BORDER + CARD_H)
-		{
-			inside = false;
-		}
+		SDL_Point p{ x, y };
+		
+		bool inside = SDL_PointInRect(&p, &activeRects[0]);
+		bool insideNewGame = SDL_PointInRect(&p, &newGame);
+		bool insideAudio = SDL_PointInRect(&p, &audioRect);
+		bool insideColor = SDL_PointInRect(&p, &colorRect);
 
 		if (e->type == SDL_MOUSEBUTTONDOWN && inside && deck.size())
 		{
 			drawCard(deck[deck.size() - 1]);
 			deck.erase(deck.end() - 1);
-		}
-
-		bool insideNewGame = true;
-		if (x < newGame.x)
-		{
-			insideNewGame = false;
-		}
-		else if (x > newGame.x + NEW_GAME_WIDTH)
-		{
-			insideNewGame = false;
-		}
-		else if (y < newGame.y)
-		{
-			insideNewGame = false;
-		}
-		else if (y > newGame.y + NEW_GAME_HEIGHT)
-		{
-			inside = false;
-		}
-
-		bool insideAudio = true;
-		if (x < audioRect.x)
-		{
-			insideAudio = false;
-		}
-		else if (x > audioRect.x + AUDIO_WIDTH)
-		{
-			insideAudio = false;
-		}
-		else if (y < audioRect.y)
-		{
-			insideAudio = false;
-		}
-		else if (y > audioRect.y + AUDIO_HEIGHT)
-		{
-			insideAudio = false;
-		}
-
-		bool insideColor = true;
-		if (x < colorRect.x)
-		{
-			insideColor = false;
-		}
-		else if (x > colorRect.x + AUDIO_WIDTH)
-		{
-			insideColor = false;
-		}
-		else if (y < colorRect.y)
-		{
-			insideColor = false;
-		}
-		else if (y > colorRect.y + AUDIO_HEIGHT)
-		{
-			insideColor = false;
 		}
 
 		if (e->type == SDL_MOUSEMOTION)
@@ -321,7 +255,7 @@ void playSoundEffect(bool victory = false)
 
 	if (!paused)
 	{
-		gMusic = Mix_LoadMUS((cardsDir + (victory ? "/success-fanfare-trumpets-6185.mp3" : "/failure-1-89170.mp3")).data());
+		gMusic = Mix_LoadMUS((cardsDir + (victory ? VICTORY_SOUND : DEFEAT_SOUND)).data());
 		if (gMusic)
 			Mix_PlayMusic(gMusic, 0);
 	}
@@ -343,7 +277,7 @@ void playSoundEffect(bool victory = false)
 
 	if (!paused)
 	{
-		gMusic = Mix_LoadMUS((cardsDir + "/Hugh_Laurie_-_The_Weed_Smokers_Dream_(musmore.com).mp3").data());
+		gMusic = Mix_LoadMUS((cardsDir + BACK_MUSIC).data());
 		if (gMusic)
 			Mix_PlayMusic(gMusic, 1);
 	}
@@ -410,9 +344,9 @@ void createDeck()
 	deck.clear();
 	for (auto const& entry : filesystem::directory_iterator(cardsDir))
 	{
-		string sEntry = entry.path().string();
-		if (sEntry.find("cardBack") == string::npos)
-			deck.push_back(sEntry);
+		string filename = entry.path().filename().string();
+		if (filename.find("cardBack") == string::npos && filename.substr(0, 4) == "card")
+			deck.push_back(entry.path().string());
 	}
 
 	shuffle(deck.begin(), deck.end(), generator);
@@ -422,33 +356,30 @@ void createDeck()
 
 void drawNewGame()
 {
-	int w, h;
-	SDL_GetWindowSize(gWindow, &w, &h);
-	
-	newGame.x = (w - NEW_GAME_WIDTH) / 2;
-	newGame.y = h - NEW_GAME_HEIGHT - 10;
+	newGame.x = (gScreenSurface->w - NEW_GAME_WIDTH) / 2;
+	newGame.y = gScreenSurface->h - NEW_GAME_HEIGHT - 10;
 	newGame.w = NEW_GAME_WIDTH;
 	newGame.h = NEW_GAME_HEIGHT;
 
-	audioRect.x = w - AUDIO_WIDTH - 20;
-	audioRect.y = h - AUDIO_HEIGHT - 10;
+	audioRect.x = gScreenSurface->w - AUDIO_WIDTH - 20;
+	audioRect.y = gScreenSurface->h - AUDIO_HEIGHT - 10;
 	audioRect.w = AUDIO_WIDTH;
 	audioRect.h = AUDIO_HEIGHT;
 
-	textRect.x = w / 2 - 60;
-	textRect.y = h / 2 - 30;
+	textRect.x = gScreenSurface->w / 2 - 60;
+	textRect.y = gScreenSurface->h / 2 - 30;
 
 	colorRect.x = 10;
-	colorRect.y = h - AUDIO_HEIGHT - 10;
+	colorRect.y = gScreenSurface->h - AUDIO_HEIGHT - 10;
 	colorRect.w = AUDIO_WIDTH;
 	colorRect.h = AUDIO_HEIGHT;
 
 	SDL_Surface* gPNGSurface = NULL;
-	if (loadMedia(cardsDir + "/NewGame.png", &gPNGSurface, true))
+	if (loadMedia(cardsDir + NEW_GAME_BUTTON, &gPNGSurface, true))
 		SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, &newGame);
-	if (loadMedia(cardsDir + "/SeekPng.com_colorful-png_512093.png", &gPNGSurface, true))
+	if (loadMedia(cardsDir + COLORS_CHANGE_BUTTON, &gPNGSurface, true))
 		SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, &colorRect);
-	if (loadMedia(Mix_PausedMusic() ? cardsDir + "/icons8-audio-50.png" : cardsDir + "/icons8-no-audio-50.png", &gPNGSurface, true))
+	if (loadMedia(Mix_PausedMusic() ? cardsDir + AUDIO_BUTTON : cardsDir + NO_AUDIO_BUTTON, &gPNGSurface, true))
 		SDL_BlitSurface(gPNGSurface, NULL, gScreenSurface, &audioRect);
 	if (amount && gFont)
 	{
@@ -466,7 +397,7 @@ string getCardsDir(char* arg)
 int main(int argc, char* args[])
 {
 	cardsDir = getCardsDir(args[0]);
-	pile = pile = cardsDir + "/cardBack_blue4.png";
+	pile = pile = cardsDir + INIT_CARD_BACK;
 
 	if (init())
 	{
@@ -477,10 +408,10 @@ int main(int argc, char* args[])
 			bool quit = false;
 			SDL_Event e; 
 
-			gFont = TTF_OpenFont((cardsDir + "/Arial-BoldMT.ttf").data(), 64);
+			gFont = TTF_OpenFont((cardsDir + USED_FONT).data(), 64);
 			
 			Mix_OpenAudio(22050, AUDIO_S16SYS, 2, 640);
-			gMusic = Mix_LoadMUS((cardsDir + "/Hugh_Laurie_-_The_Weed_Smokers_Dream_(musmore.com).mp3").data());
+			gMusic = Mix_LoadMUS((cardsDir + BACK_MUSIC).data());
 			if (gMusic)
 				Mix_PlayMusic(gMusic, 1);
 
