@@ -344,9 +344,10 @@ void createDeck()
 	deck.clear();
 	for (auto const& entry : filesystem::directory_iterator(cardsDir))
 	{
-		string filename = entry.path().filename().string();
+		filesystem::path path = entry.path();
+		string filename = path.filename().string();
 		if (filename.find("cardBack") == string::npos && filename.substr(0, 4) == "card")
-			deck.push_back(entry.path().string());
+			deck.push_back(path.string());
 	}
 
 	shuffle(deck.begin(), deck.end(), generator);
