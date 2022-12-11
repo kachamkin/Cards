@@ -326,12 +326,23 @@ void playSoundEffect(bool victory = false)
 			Mix_PlayMusic(gMusic, 0);
 	}
 
-	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, victory ? "VICTORY!" : "Defeat...", victory ? "Win!" : "You lose...", gWindow);
+	SDL_MessageBoxButtonData buttons[] = {
+		{ SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT, 0, "Got it" },
+	};
+	
+	SDL_MessageBoxData mbd{};
+	mbd.flags = victory ? SDL_MESSAGEBOX_INFORMATION : SDL_MESSAGEBOX_ERROR;
+	mbd.window = gWindow;
+	mbd.title = victory ? "VICTORY!" : "Defeat...";
+	mbd.message = victory ? "Win!" : "You lose...";
+	mbd.numbuttons = 1;
+	mbd.buttons = buttons;
+
+	SDL_ShowMessageBox(&mbd, NULL);
 	createDeck();
 
 	if (!paused)
 	{
-		SDL_Delay(1000);
 		gMusic = Mix_LoadMUS((cardsDir + "/Hugh_Laurie_-_The_Weed_Smokers_Dream_(musmore.com).mp3").data());
 		if (gMusic)
 			Mix_PlayMusic(gMusic, 1);
