@@ -323,6 +323,8 @@ void drawCard(string path)
 	activePos.push_back(activeRects[0].x);
 
 	SDL_Rect rect = activeRects[0];
+	rect.w = CARD_W;
+	rect.h = CARD_H;
 	activeRects.push_back(rect);
 
 	while (activeRects[activeRects.size() - 1].x < activeRects[0].x + CARD_W + ANIMATION_LENGTH + (activeRects.size() - 1) * HORIZ_STEP)
@@ -341,13 +343,32 @@ void drawCard(string path)
 
 	if (amount == 21)
 	{
+		gMusic = Mix_LoadMUS((cardsDir + "/success-fanfare-trumpets-6185.mp3").data());
+		if (gMusic)
+			Mix_PlayMusic(gMusic, 0);
+		SDL_Delay(1000);
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "VICTORY!", "Win!", gWindow);
 		createDeck();
+
+		gMusic = Mix_LoadMUS((cardsDir + "/Hugh_Laurie_-_The_Weed_Smokers_Dream_(musmore.com).mp3").data());
+		if (gMusic)
+			Mix_PlayMusic(gMusic, 1);
+
 	}
 	if (amount > 21)
 	{
+
+		gMusic = Mix_LoadMUS((cardsDir + "/failure-1-89170.mp3").data());
+		if (gMusic)
+			Mix_PlayMusic(gMusic, 0);
+
 		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Defeat...", "You lose...", gWindow);
 		createDeck();
+		SDL_Delay(1000);
+
+		gMusic = Mix_LoadMUS((cardsDir + "/Hugh_Laurie_-_The_Weed_Smokers_Dream_(musmore.com).mp3").data());
+		if (gMusic)
+			Mix_PlayMusic(gMusic, 1);
 	}
 }
 
@@ -397,15 +418,21 @@ void drawNewGame()
 	
 	newGame.x = (w - NEW_GAME_WIDTH) / 2;
 	newGame.y = h - NEW_GAME_HEIGHT - 10;
+	newGame.w = NEW_GAME_WIDTH;
+	newGame.h = NEW_GAME_HEIGHT;
 
 	audioRect.x = w - AUDIO_WIDTH - 20;
 	audioRect.y = h - AUDIO_HEIGHT - 10;
+	audioRect.w = AUDIO_WIDTH;
+	audioRect.h = AUDIO_HEIGHT;
 
 	textRect.x = w / 2 - 60;
 	textRect.y = h / 2 - 30;
 
 	colorRect.x = 10;
 	colorRect.y = h - AUDIO_HEIGHT - 10;
+	colorRect.w = AUDIO_WIDTH;
+	colorRect.h = AUDIO_HEIGHT;
 
 	SDL_Surface* gPNGSurface = NULL;
 	if (loadMedia(cardsDir + "/NewGame.png", &gPNGSurface, true))
@@ -452,6 +479,8 @@ int main(int argc, char* args[])
 			activeRects.push_back(rect);
 			activeRects[0].x = initPos;
 			activeRects[0].y = TOP_BORDER;
+			activeRects[0].w = CARD_W;
+			activeRects[0].h = 243;
 
 			createDeck();
 

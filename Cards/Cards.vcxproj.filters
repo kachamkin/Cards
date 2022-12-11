@@ -18,214 +18,252 @@
     <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="CGame.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardBack_blue1.png">
+    <Image Include="..\x64\Debug\Res\cardBack_blue1.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardBack_blue2.png">
+    <Image Include="..\x64\Debug\Res\cardBack_blue2.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardBack_blue3.png">
+    <Image Include="..\x64\Debug\Res\cardBack_blue3.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardBack_blue4.png">
+    <Image Include="..\x64\Debug\Res\cardBack_blue4.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardBack_blue5.png">
+    <Image Include="..\x64\Debug\Res\cardBack_blue5.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardBack_green1.png">
+    <Image Include="..\x64\Debug\Res\cardBack_green1.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardBack_green2.png">
+    <Image Include="..\x64\Debug\Res\cardBack_green2.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardBack_green3.png">
+    <Image Include="..\x64\Debug\Res\cardBack_green3.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardBack_green4.png">
+    <Image Include="..\x64\Debug\Res\cardBack_green4.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardBack_green5.png">
+    <Image Include="..\x64\Debug\Res\cardBack_green5.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardBack_red1.png">
+    <Image Include="..\x64\Debug\Res\cardBack_red1.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardBack_red2.png">
+    <Image Include="..\x64\Debug\Res\cardBack_red2.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardBack_red3.png">
+    <Image Include="..\x64\Debug\Res\cardBack_red3.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardBack_red4.png">
+    <Image Include="..\x64\Debug\Res\cardBack_red4.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardBack_red5.png">
+    <Image Include="..\x64\Debug\Res\cardBack_red5.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardClubs2.png">
+    <Image Include="..\x64\Debug\Res\cardClubs10.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardClubs3.png">
+    <Image Include="..\x64\Debug\Res\cardClubs2.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardClubs4.png">
+    <Image Include="..\x64\Debug\Res\cardClubs3.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardClubs5.png">
+    <Image Include="..\x64\Debug\Res\cardClubs4.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardClubs6.png">
+    <Image Include="..\x64\Debug\Res\cardClubs5.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardClubs7.png">
+    <Image Include="..\x64\Debug\Res\cardClubs6.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardClubs8.png">
+    <Image Include="..\x64\Debug\Res\cardClubs7.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardClubs9.png">
+    <Image Include="..\x64\Debug\Res\cardClubs8.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardClubs10.png">
+    <Image Include="..\x64\Debug\Res\cardClubs9.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardClubsA.png">
+    <Image Include="..\x64\Debug\Res\cardClubsA.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardClubsJ.png">
+    <Image Include="..\x64\Debug\Res\cardClubsJ.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardClubsK.png">
+    <Image Include="..\x64\Debug\Res\cardClubsK.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardClubsQ.png">
+    <Image Include="..\x64\Debug\Res\cardClubsQ.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardDiamonds2.png">
+    <Image Include="..\x64\Debug\Res\cardDiamonds10.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardDiamonds3.png">
+    <Image Include="..\x64\Debug\Res\cardDiamonds2.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardDiamonds4.png">
+    <Image Include="..\x64\Debug\Res\cardDiamonds3.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardDiamonds5.png">
+    <Image Include="..\x64\Debug\Res\cardDiamonds4.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardDiamonds6.png">
+    <Image Include="..\x64\Debug\Res\cardDiamonds5.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardDiamonds7.png">
+    <Image Include="..\x64\Debug\Res\cardDiamonds6.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardDiamonds8.png">
+    <Image Include="..\x64\Debug\Res\cardDiamonds7.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardDiamonds9.png">
+    <Image Include="..\x64\Debug\Res\cardDiamonds8.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardDiamonds10.png">
+    <Image Include="..\x64\Debug\Res\cardDiamonds9.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardDiamondsA.png">
+    <Image Include="..\x64\Debug\Res\cardDiamondsA.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardDiamondsJ.png">
+    <Image Include="..\x64\Debug\Res\cardDiamondsJ.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardDiamondsK.png">
+    <Image Include="..\x64\Debug\Res\cardDiamondsK.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardDiamondsQ.png">
+    <Image Include="..\x64\Debug\Res\cardDiamondsQ.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardHearts2.png">
+    <Image Include="..\x64\Debug\Res\cardHearts10.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardHearts3.png">
+    <Image Include="..\x64\Debug\Res\cardHearts2.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardHearts4.png">
+    <Image Include="..\x64\Debug\Res\cardHearts3.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardHearts5.png">
+    <Image Include="..\x64\Debug\Res\cardHearts4.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardHearts6.png">
+    <Image Include="..\x64\Debug\Res\cardHearts5.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardHearts7.png">
+    <Image Include="..\x64\Debug\Res\cardHearts6.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardHearts8.png">
+    <Image Include="..\x64\Debug\Res\cardHearts7.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardHearts9.png">
+    <Image Include="..\x64\Debug\Res\cardHearts8.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardHearts10.png">
+    <Image Include="..\x64\Debug\Res\cardHearts9.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardHeartsA.png">
+    <Image Include="..\x64\Debug\Res\cardHeartsA.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardHeartsJ.png">
+    <Image Include="..\x64\Debug\Res\cardHeartsJ.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardHeartsK.png">
+    <Image Include="..\x64\Debug\Res\cardHeartsK.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardHeartsQ.png">
+    <Image Include="..\x64\Debug\Res\cardHeartsQ.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardJoker.png">
+    <Image Include="..\x64\Debug\Res\cardJoker.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpades2.png">
+    <Image Include="..\x64\Debug\Res\cardSpades10.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpades3.png">
+    <Image Include="..\x64\Debug\Res\cardSpades2.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpades4.png">
+    <Image Include="..\x64\Debug\Res\cardSpades3.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpades5.png">
+    <Image Include="..\x64\Debug\Res\cardSpades4.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpades6.png">
+    <Image Include="..\x64\Debug\Res\cardSpades5.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpades7.png">
+    <Image Include="..\x64\Debug\Res\cardSpades6.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpades8.png">
+    <Image Include="..\x64\Debug\Res\cardSpades7.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpades9.png">
+    <Image Include="..\x64\Debug\Res\cardSpades8.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpades10.png">
+    <Image Include="..\x64\Debug\Res\cardSpades9.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpadesA.png">
+    <Image Include="..\x64\Debug\Res\cardSpadesA.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpadesJ.png">
+    <Image Include="..\x64\Debug\Res\cardSpadesJ.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpadesK.png">
+    <Image Include="..\x64\Debug\Res\cardSpadesK.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="..\..\sdl2-hearts-game-master\res\Cards\cardSpadesQ.png">
+    <Image Include="..\x64\Debug\Res\cardSpadesQ.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
-    <Image Include="NewGame.png">
+    <Image Include="..\x64\Debug\Res\icons8-audio-50.png">
       <Filter>Файлы ресурсов</Filter>
     </Image>
+    <Image Include="..\x64\Debug\Res\icons8-no-audio-50.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\x64\Debug\Res\NewGame.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\x64\Debug\Res\SeekPng.com_colorful-png_512093.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="..\x64\Debug\Res\white-arrow-png-41942.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CGame.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="header.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\x64\Debug\Res\Hugh_Laurie_-_The_Weed_Smokers_Dream_(musmore.com).mp3" />
+    <Media Include="..\x64\Debug\Res\success-fanfare-trumpets-6185.mp3">
+      <Filter>Файлы ресурсов</Filter>
+    </Media>
+    <Media Include="..\x64\Debug\Res\failure-1-89170.mp3">
+      <Filter>Файлы ресурсов</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="..\x64\Debug\Res\Arial-BoldMT.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\x64\Debug\Res\license.txt" />
   </ItemGroup>
 </Project>

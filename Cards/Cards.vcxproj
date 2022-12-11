@@ -223,7 +223,9 @@
     <Image Include="..\x64\Debug\Res\white-arrow-png-41942.png" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="..\x64\Debug\Res\failure-1-89170.mp3" />
     <Media Include="..\x64\Debug\Res\Hugh_Laurie_-_The_Weed_Smokers_Dream_(musmore.com).mp3" />
+    <Media Include="..\x64\Debug\Res\success-fanfare-trumpets-6185.mp3" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\x64\Debug\Res\license.txt" />
